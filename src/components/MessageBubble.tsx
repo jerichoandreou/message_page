@@ -24,8 +24,14 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
         />
       )}
       <div>
-        <div className={isSent ? "message-bubble-sent" : "message-bubble-received"}>
-          <p>{content}</p>
+        <div 
+          className={`px-4 py-3 rounded-2xl max-w-[80%] ${
+            isSent 
+              ? "bg-[hsl(var(--message-primary))] text-white rounded-br-none" 
+              : "bg-gray-100 rounded-bl-none"
+          }`}
+        >
+          <p className="text-sm">{content}</p>
         </div>
         <p className={`text-xs text-gray-500 mt-1 ${isSent ? "text-right" : "text-left"}`}>
           {timestamp}
