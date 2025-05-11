@@ -1,0 +1,62 @@
+
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:MauiChatApp.ViewModels"
+             xmlns:models="clr-namespace:MauiChatApp.Models"
+             x:Class="MauiChatApp.Pages.MessagePage"
+             x:DataType="viewmodels:MessagePageViewModel"
+             Title="{Binding Contact.Name}">
+
+    <Grid RowDefinitions="*, Auto">
+        <CollectionView ItemsSource="{Binding Messages}"
+                        Grid.Row="0"
+                        Margin="10"
+                        VerticalScrollBarVisibility="Default">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Message">
+                    <Grid Padding="5">
+                        <Frame BorderColor="Transparent"
+                               CornerRadius="10"
+                               Padding="10"
+                               HorizontalOptions="{Binding IsSent, Converter={StaticResource BoolToAlignmentConverter}}"
+                               BackgroundColor="{Binding IsSent, Converter={StaticResource BoolToColorConverter}}"
+                               MaximumWidthRequest="300">
+                            <StackLayout>
+                                <Label Text="{Binding Content}"
+                                       TextColor="{Binding IsSent, Converter={StaticResource BoolToTextColorConverter}}" />
+                                <Label Text="{Binding Timestamp}"
+                                       FontSize="Small"
+                                       TextColor="Gray"
+                                       HorizontalOptions="End" />
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Grid Grid.Row="1"
+              ColumnDefinitions="*, Auto"
+              Padding="10"
+              BackgroundColor="WhiteSmoke">
+            <Frame Grid.Column="0"
+                   BorderColor="LightGray"
+                   CornerRadius="25"
+                   Padding="15,0">
+                <Entry Placeholder="Type a message..."
+                       Text="{Binding MessageText}"
+                       VerticalOptions="Center"
+                       MaxLength="500" />
+            </Frame>
+            <Button Grid.Column="1"
+                    Text="Send"
+                    CornerRadius="25"
+                    HeightRequest="50"
+                    WidthRequest="50"
+                    Margin="5,0,0,0"
+                    Command="{Binding SendMessageCommand}" />
+        </Grid>
+    </Grid>
+
+</ContentPage>
